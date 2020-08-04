@@ -17,8 +17,8 @@ public class CrawlingController {
 		
 		/* 도경이는 여기서 작업하면 됨. */
 		// 결과 값을 넘겨주고 싶으면 model.addAttribute("이름", 보내고 싶은 값); 사용해서 보내기.
-		// 받을 떄는 EL사용해서 받아야함.
-		return "result";
+		
+		return "result"; // 받을 떄는 EL사용해서 result페이지에서 받아야함.
 		
 	}
 }
