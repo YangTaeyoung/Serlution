@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
@@ -21,12 +23,13 @@
 			
 		</script>
 	<body>
+	${pageContext.request.contextPath}
 		<form action="search.do" method="get">
 			<div> 
 				<div>
-					<img src="Images/main_logo.png" alt="본 브라우저에서 이미지 형식을 지원하지 않습니다.">
+					<img src="${pageContext.request.contextPath}/resources/main_logo.png" alt="본 브라우저에서 이미지 형식을 지원하지 않습니다."><!-- 시바 경로 설정 어떻게 하는겨... -->
 				</div>
-				<div class="input-group mb-3">
+				<div class="input-group mb-3 mx-auto">
 					<input type="text" class="form-control" placeholder="검색할 단어를 입력하세요." name="keyword">
 					<div class="input-group-append">
 						<input type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2" value="검색"/>

@@ -33,15 +33,22 @@ public class UserDAO {
 	public List<User> select()
 	{
 		 String sql = "select * from user_info";
-		 List<User> Users = jdbcTemplate.query(sql, new UserMapper());
-		 return Users;
+		 List<User> users = jdbcTemplate.query(sql, new UserMapper());
+		 return users;
 	}
-	// 유저조회 메서드 - 단건
+	// 유저조회 메서드 - 단건(유저 번호 이용시)
 	public User select(Integer user_no)
 	{
-		 String sql = "select * from user_info where user_no = ?";
-		 User User = jdbcTemplate.queryForObject(sql, new Object[] {user_no}, new UserMapper());
-		 return User;
+		 String sql = "select * from user_info where user_no=?";
+		 User user = jdbcTemplate.queryForObject(sql, new Object[] {user_no}, new UserMapper());
+		 return user;
+	}
+	// 유저조회 메서드 - 단건(유저 이메일 이용 시)
+	public User select(String user_email)
+	{
+		String sql = "select * from user_info where user_email=?";
+		User user = jdbcTemplate.queryForObject(sql, new Object[] {user_email}, new UserMapper());
+		return user;
 	}
 	public void update(Integer user_no, User user)
 	{

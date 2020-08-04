@@ -31,16 +31,26 @@ public class SearchDAO {
 	// 검색 리스트 조회 - 단건
 	public Search select(int ser_no)
 	{
-		String sql = "select * from search_info";
+		String sql = "select * from search_info where ser_no = ?";
 		Search search = jdbcTemplate.queryForObject(sql, new Object[] {ser_no}, new SearchMapper());
 		
 		return search;
 	}
-	// 검색 리스트 삽입 
+	
+	// 검색 리스트 삽입 - 단건
 	public void insert(Search search)
 	{
 		String sql = "insert into search_info(ser_title, ser_content, ser_link, ser_date) values(?,?,?,NOW())";
 		jdbcTemplate.update(sql,search.getSer_title(),search.getSer_content(),search.getSer_link());
+	}
+	
+	// 검색 리스트 삽입 - 여러건
+	public void insert(List<Search>searches)
+	{
+		for(int i = 0; i < searches.size(); i++)
+		{
+			insert(searches.get(i));
+		}
 	}
 	
 }
