@@ -350,7 +350,7 @@ public class CrawlingController {
 	private HistoryDAO historyDAO;
 	
 	@RequestMapping(value="search.do")
-	public String searchDo(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword)
+	public String searchDo(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) throws IOException
 	{
 		/* 도경이는 여기서 작업하면 됨. */
 		//jsoup-1.13.1.jar 필요함
@@ -360,10 +360,15 @@ public class CrawlingController {
 		//element는 키워드, 시작 페이지 번호, 끝 페이지 번호
 		//페이지 번호는 (현재 페이지-1)X10 + 1
 		NaverBlogCrawler blog = new NaverBlogCrawler(keyword, 1, 991); //100페이지까지 검색됨
+		blog.blogCrawler();
 		searches.addAll(blog.blogList);
+		
 		NaverCafeCrawler cafe = new NaverCafeCrawler(keyword, 1, 991); //100페이지까지 검색됨
+		cafe.cafeCrawler();
 		searches.addAll(cafe.cafeList);
+		
 		NaverWebCrawler web = new NaverWebCrawler(keyword, 1, 91); //10페이지까지 검색됨
+		web.webCrawler();
 		searches.addAll(web.webList);
 		
 		/* 종구 형의 작업 공간*/
