@@ -88,12 +88,13 @@ class NaverBlogCrawler {
 					url = "https://blog.naver.com/"+tempStr3[0]+"/"+tempStr3[1];
 				}
 				
-				//임시 블로그 주소 접속
-				Document blogTemp = Jsoup.connect(url).get();
-				
 				String blogTextStr;
 				
 				try {
+					
+					//임시 블로그 주소 접속
+					Document blogTemp = Jsoup.connect(url).get();
+					
 					//daum블로그일 경우
 					if(url.contains("daum")) {
 						blogTextStr = "";
