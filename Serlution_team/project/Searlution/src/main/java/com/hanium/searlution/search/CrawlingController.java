@@ -93,28 +93,35 @@ class NaverBlogCrawler {
 				
 				String blogTextStr;
 				
-				//daum블로그일 경우
-				if(url.contains("daum")) {
-					blogTextStr = "";
-				}
-				else {
-					//블로그의 실제 주소 가져오기
-					Elements frame;
-					Document blog;
-					if(url.contains("blog.naver.com")) {
-					frame = blogTemp.select("iframe#mainFrame");
-					blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
-					} else { //개인 도메인 사용하는 경우
-						Elements tempFra = blogTemp.select("iframe#screenFrame");
-						Document tempDoc = Jsoup.connect(tempFra.attr("src")).get();
-						
-						frame = tempDoc.select("iframe#mainFrame");
-						blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
+				try {
+					//daum블로그일 경우
+					if(url.contains("daum")) {
+						blogTextStr = "";
 					}
-					
-					//내용 글 저장
-					Elements blogText = blog.select("div.se-main-container");
-					blogTextStr = blogText.text();
+					else {
+						//블로그의 실제 주소 가져오기
+						Elements frame;
+						Document blog;
+						if(url.contains("blog.naver.com")) {
+						frame = blogTemp.select("iframe#mainFrame");
+						blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
+						} else { //개인 도메인 사용하는 경우
+							Elements tempFra = blogTemp.select("iframe#screenFrame");
+							Document tempDoc = Jsoup.connect(tempFra.attr("src")).get();
+							
+							frame = tempDoc.select("iframe#mainFrame");
+							blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
+						}
+						
+						//내용 글 저장
+						Elements blogText = blog.select("div.se-main-container");
+						blogTextStr = blogText.text();
+					}
+				} catch (IllegalArgumentException e) {
+					blogTextStr = "";
+				} catch (Exception e) {
+					blogTextStr = "";
+					System.out.println("블로그 url중 이상한 오류 발생");
 				}
 				
 				//현재 날짜 저장
