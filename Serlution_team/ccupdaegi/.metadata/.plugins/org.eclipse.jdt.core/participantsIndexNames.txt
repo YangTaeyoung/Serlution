@@ -1,0 +1,11 @@
+INDEX VERSION 1.131
+C:\Users\imgzo\eclipse-workspace\ccupdaegi\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3487788501.index
+\Crawling_example\src
+C:\Users\imgzo\eclipse-workspace\ccupdaegi\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3645419759.index
+\Crawling_example\src
+C:\Users\imgzo\eclipse-workspace\ccupdaegi\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\438623710.index
+\Crawling_example\src
+C:\Users\imgzo\eclipse-workspace\ccupdaegi\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3539830928.index
+\Crawling_example\src
+C:\Users\imgzo\eclipse-workspace\ccupdaegi\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1896640834.index
+\Crawling_example\src
