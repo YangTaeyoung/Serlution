@@ -40,10 +40,10 @@ public class SearchDAO {
 	// 검색 리스트 삽입 - 단건
 	public void insert(Search search)
 	{
-		String sql = "insert into search_info(ser_title, ser_content, ser_link, ser_date) values(?,?,?,NOW())";
-		System.out.println("여기까진 오나요?1");
-		jdbcTemplate.update(sql,search.getSer_title(),search.getSer_content(),search.getSer_link());
-		System.out.println("여기까지는요?");
+		String sql = "insert into search_info(ser_title, ser_content, ser_link, ser_date) values(\'?\',\'?\',?,?";
+		System.out.println("Insert Test1");
+		jdbcTemplate.update(sql,search.getSer_title(),search.getSer_content(),search.getSer_link(),search.getSer_date());
+		System.out.println("Insert Test2");
 	}
 	
 	// 검색 리스트 삽입 - 여러건
