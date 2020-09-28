@@ -27,7 +27,7 @@
 <!-- 검색창, 로고 -->
   <main role="main" class="inner cover">
     <h3 class="text-left text-dark">이메일</h3>
-    <form action="/user/loign/chk" method="get">
+    <form action="/user/login/chk" method="get">
 	  	<div class="input-group input-group-lg mb-3">
 	      <input type="text" class="form-control" placeholder="이메일을 입력하세요." aria-label="이메일을 입력하세요." name="id">
 	    </div>
