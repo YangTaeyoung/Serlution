@@ -159,12 +159,15 @@ class NaverBlogCrawler {
 				tempSearch.setSer_date(blogDate);
 				tempSearch.setSer_content(blogTextStr);
 				
+<<<<<<< HEAD
 				// 제대로 동작하는지 확인하는 란.
 				System.out.println("글 제목:" + blogTitle);
 				System.out.println("글 내용:" + blogTextStr);
 				System.out.println("게시 일시:" + blogDate);		
 				System.out.println("글 링크:" + url);
 				
+=======
+>>>>>>> 936aefc0c821d2fabd8ac854a7b9da39e488e7e6
 				//리스트에 저장
 				blogList.add(tempSearch);
 				
@@ -269,12 +272,15 @@ class NaverCafeCrawler {
 				tempSearch.setSer_date(cafeDate);
 				tempSearch.setSer_content(cafeText);
 				
+<<<<<<< HEAD
 				// 제대로 동작하는지 확인하는 란.
 				System.out.println("글 제목:" + cafeTitle);
 				System.out.println("글 내용:" + cafeText);
 				System.out.println("게시 일시:" + cafeDate);		
 				System.out.println("글 링크:" + url);
 				
+=======
+>>>>>>> 936aefc0c821d2fabd8ac854a7b9da39e488e7e6
 				//리스트에 저장
 				cafeList.add(tempSearch);
 				
@@ -347,11 +353,14 @@ class NaverWebCrawler {
 				tempSearch.setSer_date("");
 				tempSearch.setSer_content(webText);
 				
+<<<<<<< HEAD
 				// 제대로 동작하는지 확인하는 란.
 				System.out.println("글 제목:" + webTitle);
 				System.out.println("글 내용:" + webText);		
 				System.out.println("글 링크:" + url);
 				
+=======
+>>>>>>> 936aefc0c821d2fabd8ac854a7b9da39e488e7e6
 				//리스트에 저장
 				webList.add(tempSearch);
 			}
