@@ -19,7 +19,15 @@
 			}
 		</style>
 		<script>
-			
+			function page_move(url)
+			{
+				var form = document.createElement("form");
+				form.action = url;
+			   	form.method = "post";
+
+				document.body.appendChild(form);
+				form.submit();
+			}
 		</script>
 	<body>
 	
@@ -33,9 +41,9 @@
 			<div class="inner">
 		    	<h3 class="masthead-brand">Searlution</h3>
 		    	<nav class="nav nav-masthead justify-content-center">
-			        <a class="nav-link active" href="/searlution">Home</a>
-			        <a class="nav-link" href="/searlution/user/logout">로그아웃</a>
-			        <a class="nav-link" href="/searlution/user/myinfo">마이페이지</a>
+			        <a class="nav-link active" href="/">Home</a>
+			        <a class="nav-link" href="/user/logout">로그아웃</a>
+			        <a class="nav-link" href="/user/myinfo">마이페이지</a>
 		    	</nav>
 			</div>
 		</header>
@@ -48,9 +56,9 @@
     		<div class="inner">
       			<h3 class="masthead-brand">Searlution</h3>
      			<nav class="nav nav-masthead justify-content-center">
-			        <a class="nav-link active" href="/searlution">Home</a>
-			        <a class="nav-link" href="/searlution/user/login">로그인</a>
-			        <a class="nav-link" href="/searlution/user/join">회원가입</a>
+			        <a class="nav-link active" href="/">Home</a>
+			        <a class="nav-link" href="/user/login" >로그인</a>
+			        <a class="nav-link" href="/user/join">회원가입</a>
       			</nav>
     		</div>
   		</header>
