@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.coyote.http2.ConnectionException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -65,20 +66,22 @@ class NaverBlogCrawler {
 			Document blogSearch = Jsoup.connect(blogCompleteUrl).get();
 			
 			//블로그 검색결과 각 게시글들 가져오기
-			Elements blogUrl = blogSearch.select("li.sh_blog_top");
+			Elements blogUrl = blogSearch.select("li.bx");
 			
 			//날짜 포멧
 			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
 			
+			
+			int crawlCounter = 0;
 			for(Element element : blogUrl) {
 				//블로그 주소
-				String url = element.select("a.sh_blog_title").attr("href");
+				String url = element.select("a.api_txt_lines").attr("href");
 				
 				//블로그 제목
-				String blogTitle = element.select("a.sh_blog_title").text();
+				String blogTitle = element.select("a.api_txt_lines").text();
 				
 				//게시글 날짜
-				String blogDate = element.select("dd.txt_inline").text();
+				String blogDate = element.select("span.sub_time").text();
 				
 				//도메인이 blog.me일 경우
 				if(url.contains("blog.me")) {
@@ -95,34 +98,28 @@ class NaverBlogCrawler {
 					//임시 블로그 주소 접속
 					Document blogTemp = Jsoup.connect(url).get();
 					
-					//daum블로그일 경우
-					if(url.contains("daum")) {
+					//블로그의 실제 주소 가져오기
+					Elements frame;
+					Document blog;
+					if(url.contains("blog.naver.com")) {
+					frame = blogTemp.select("iframe#mainFrame");
+					blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
+					
+					//내용 글 저장
+					Elements blogText = blog.select("div.se-main-container");
+					blogTextStr = blogText.text();
+					} else { //개인 도메인 사용하는 경우
 						blogTextStr = "";
 					}
-					else {
-						//블로그의 실제 주소 가져오기
-						Elements frame;
-						Document blog;
-						if(url.contains("blog.naver.com")) {
-						frame = blogTemp.select("iframe#mainFrame");
-						blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
-						} else { //개인 도메인 사용하는 경우
-							Elements tempFra = blogTemp.select("iframe#screenFrame");
-							Document tempDoc = Jsoup.connect(tempFra.attr("src")).get();
-							
-							frame = tempDoc.select("iframe#mainFrame");
-							blog = Jsoup.connect("https://blog.naver.com"+frame.attr("src")).get();
-						}
-						
-						//내용 글 저장
-						Elements blogText = blog.select("div.se-main-container");
-						blogTextStr = blogText.text();
+					
+					if(blogTextStr.equals("")) {
+						blogTextStr = element.select("div.api_txt_lines").text();
 					}
+					
 				} catch (IllegalArgumentException e) {
 					blogTextStr = "";
 				} catch (Exception e) {
 					blogTextStr = "";
-					System.out.println("블로그 url중 이상한 오류 발생");
 				}
 				
 				//현재 날짜 저장
@@ -176,6 +173,7 @@ class NaverBlogCrawler {
 				//리스트에 저장
 				blogList.add(tempSearch);
 				
+				crawlCounter++;
 			}
 			
 			//다음 페이지로 이동하기
@@ -224,23 +222,28 @@ class NaverCafeCrawler {
 			Document cafeSearch = Jsoup.connect(cafeCompleteUrl).get();
 			
 			//카페 검색결과 각 게시글들 가져오기
-			Elements cafeUrl = cafeSearch.select("li.sh_cafe_top");
+			Elements cafeUrl = cafeSearch.select("li.bx");
 			
 			//날짜 포멧
 			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
 			
+			int crawlCounter = 0;
+			
 			for(Element element : cafeUrl) {
+				if (crawlCounter >= 10) {
+					break;
+				}
 				//카페 링크
-				String url = element.select("a.sh_cafe_title").attr("href");
+				String url = element.select("a.api_txt_lines").attr("href");
 				
 				//카페 제목
-				String cafeTitle = element.select("a.sh_cafe_title").text();
+				String cafeTitle = element.select("a.api_txt_lines").text();
 				
 				//카페 검색결과 각 게시글들 가져오기
-				String cafeDate = element.select("dd.txt_inline").text();
+				String cafeDate = element.select("span.sub_time").text();
 				
 				//카페 내용 가져오기
-				String cafeText = element.select("dd.sh_cafe_passage").text();
+				String cafeText = element.select("div.api_txt_lines").text();
 				cafeText = cafeText.replace("...", "");
 				
 				//현재 날짜 저장
@@ -295,6 +298,7 @@ class NaverCafeCrawler {
 				//리스트에 저장
 				cafeList.add(tempSearch);
 				
+				crawlCounter++;
 			}
 			
 			//다음 페이지
@@ -345,17 +349,23 @@ class NaverWebCrawler {
 			Document webSearch = Jsoup.connect(webCompleteUrl).get();
 			
 			//검색할 주소
-			Elements webUrl = webSearch.select("li.sh_web_top");
+			Elements webUrl = webSearch.select("li.bx");
+			
+			int crawlCounter = 0;
 			
 			for(Element element : webUrl) {
+				if(crawlCounter >= 10) {
+					break;
+				}
+				
 				//웹사이트 링크
-				String url = element.select("a.title_link").attr("href");
+				String url = element.select("a.link_tit").attr("href");
 				
 				//웹사이트 제목
-				String webTitle = element.select("a.title_link").text();
+				String webTitle = element.select("a.link_tit").text();
 
 				//웹사이트 내용
-				String webText = element.select("dd.sh_web_passage").text();
+				String webText = element.select("div.api_txt_lines").text();
 				
 				//임시 Search 클래스 변수에 저장
 				Search tempSearch = new Search();
@@ -379,6 +389,8 @@ class NaverWebCrawler {
 				
 				//리스트에 저장
 				webList.add(tempSearch);
+				
+				crawlCounter++;
 			}
 			
 			//다음 페이지 이동
@@ -417,7 +429,7 @@ public class CrawlingController {
 		cafe.cafeCrawler();
 		searches.addAll(cafe.cafeList);
 		
-		NaverWebCrawler web = new NaverWebCrawler(keyword, 1, 91); //10페이지까지 검색됨
+		NaverWebCrawler web = new NaverWebCrawler(keyword, 1, 81); //10페이지까지 검색됨
 		web.webCrawler();
 		searches.addAll(web.webList);
 		
