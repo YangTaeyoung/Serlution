@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.coyote.http2.ConnectionException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,6 +26,55 @@ import com.hanium.searlution.dao.HistoryDAO;
 import com.hanium.searlution.dao.SearchDAO;
 import com.hanium.searlution.model.History;
 import com.hanium.searlution.model.Search;
+
+
+class CharSwitcher
+{
+	static public String replaceChar(String str, char ch, int index) {
+	    return str.substring(0, index) + ch + str.substring(index+1);
+	}
+	static public String checkIntegrity(String sentence)
+	{
+		String tmp = sentence;
+		tmp.replaceAll("--", "―");
+		tmp.replaceAll("/\\*", "／\\*");
+		tmp.replaceAll("\\*/", "\\*／");
+		tmp.replaceAll("//", "／／");
+		
+		int doubleCount = 0;
+		int singleCount = 0;
+		for(int i = 0; i < tmp.length(); i++)
+		{
+			if (tmp.charAt(i) == '\"' )
+			{
+				if(doubleCount == 0)
+				{
+					tmp = replaceChar(tmp,  '“', i);
+					doubleCount++;
+				}
+				else if(doubleCount == 1)
+				{
+					tmp = replaceChar(tmp, '”', i);
+					doubleCount--;
+				}
+			}
+			else if(tmp.charAt(i) == '\'')
+			{
+				if(singleCount == 0)
+				{
+					tmp = replaceChar(tmp, '‘', i);
+					singleCount++;
+				}
+				else if(singleCount == 1)
+				{
+					tmp = replaceChar(tmp, '’', i);	
+					singleCount--;
+				}
+			}
+		}
+		return tmp;
+	}
+}
 
 class NaverBlogCrawler {
 	static String blogUrlF = "https://search.naver.com/search.naver?date_from=&date_option=0&date_to=&dup_remove=1&nso=&post_blogurl=&post_blogurl_without=&query="; 
@@ -165,28 +213,22 @@ class NaverBlogCrawler {
 					
 					//임시 Search 클래스 변수에 저장
 					Search tempSearch = new Search();
-					blogTitle = blogTitle.replace("\"","");
-					blogTitle = blogTitle.replace("\'","");
-					blogTitle = blogTitle.replace("-","");
-					blogTitle = blogTitle.replace("/"," ");
-					blogTextStr = blogTextStr.replace("\"","");
-					blogTextStr = blogTextStr.replace("\'","");
-					blogTextStr = blogTextStr.replace("-","");
-					blogTextStr = blogTextStr.replace("/"," ");
-					tempSearch.setSer_title(blogTitle);
-					tempSearch.setSer_link(url);
-					tempSearch.setSer_date(blogDate);
-					tempSearch.setSer_content(blogTextStr);
+					if(!blogTitle.equals("") && !blogTextStr.equals(""))
+					{
+						tempSearch.setSer_title(CharSwitcher.checkIntegrity(blogTitle));
+						tempSearch.setSer_link(url);
+						tempSearch.setSer_date(blogDate);
+						tempSearch.setSer_content(CharSwitcher.checkIntegrity(blogTextStr));
+						
+						// 제대로 동작하는지 확인하는 란.
+						System.out.println("글 제목:" + CharSwitcher.checkIntegrity(blogTitle));
+						System.out.println("글 내용:" + CharSwitcher.checkIntegrity(blogTextStr));
+						System.out.println("게시 일시:" + blogDate);		
+						System.out.println("글 링크:" + url);
 					
-					// 제대로 동작하는지 확인하는 란.
-					System.out.println("글 제목:" + blogTitle);
-					System.out.println("글 내용:" + blogTextStr);
-					System.out.println("게시 일시:" + blogDate);		
-					System.out.println("글 링크:" + url);
-					
-					//리스트에 저장
-					blogList.add(tempSearch);
-					
+						//리스트에 저장
+						blogList.add(tempSearch);
+					}
 					crawlCounter++;
 				}
 			}
@@ -231,97 +273,82 @@ class NaverCafeCrawler {
 		int sPage = cafeStart;
 		int ePage = cafeEnd;
 		
-		while(sPage <= ePage) {	
+		while(sPage <= ePage) {			
 			//검색 결과 사이트 html 가져오기
-			boolean cafeOk = true;
-			Document cafeSearch = null;
-			try {
-				cafeSearch = Jsoup.connect(cafeCompleteUrl).get();
-			} catch(Exception e) {
-				System.out.println("cafe search result url error");
-				cafeOk = false;
-			}
+			Document cafeSearch = Jsoup.connect(cafeCompleteUrl).get();
+			
+			//카페 검색결과 각 게시글들 가져오기
+			Elements cafeUrl = cafeSearch.select("li.bx");
 			
 			//날짜 포멧
 			SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
 			
-			if(cafeOk == true) {
-				//카페 검색결과 각 게시글들 가져오기
-				Elements cafeUrl = cafeSearch.select("li.bx");
-	
-				int crawlCounter = 0;
+			int crawlCounter = 0;
+			
+			for(Element element : cafeUrl) {
+				if (crawlCounter >= 10) {
+					break;
+				}
+				//카페 링크
+				String url = element.select("a.api_txt_lines").attr("href");
 				
-				for(Element element : cafeUrl) {
-					if (crawlCounter >= 10) {
-						break;
-					}
-					//카페 링크
-					String url = element.select("a.api_txt_lines").attr("href");
-					
-					//카페 제목
-					String cafeTitle = element.select("a.api_txt_lines").text();
-					
-					//카페 검색결과 각 게시글들 가져오기
-					String cafeDate = element.select("span.sub_time").text();
-					
-					//카페 내용 가져오기
-					String cafeText = element.select("div.api_txt_lines").text();
-					cafeText = cafeText.replace("...", "");
-					
-					//현재 날짜 저장
-					Calendar cal = Calendar.getInstance();
-					
-					//다른 수식어들 날짜로 변환해주기
-					if(cafeDate.contains("분 전")) {
-						int tempMin = Integer.parseInt(cafeDate.substring(0, cafeDate.length()-3));
-						cal.add(Calendar.MINUTE, -tempMin);
-						cafeDate = formatDate.format(cal.getTime());
-					}
-					
-					else if(cafeDate.contains("시간 전")) {
-						int tempHour = Integer.parseInt(cafeDate.substring(0, cafeDate.length()-4));
-						cal.add(Calendar.HOUR_OF_DAY, -tempHour);
-						cafeDate = formatDate.format(cal.getTime());
-					}
-					
-					else if(cafeDate.contains("어제")) {
-						cal.add(Calendar.DAY_OF_MONTH, -1);
-						cafeDate = formatDate.format(cal.getTime());
-					}
-					
-					else if(cafeDate.contains("일 전")) {
-						int tempDay = Integer.parseInt(cafeDate.substring(0, cafeDate.length()-3));
-						cal.add(Calendar.DAY_OF_MONTH, -tempDay);
-						cafeDate = formatDate.format(cal.getTime());
-					}
-					
-					//임시 Search 클래스 변수에 저장
-					Search tempSearch = new Search();
-					cafeTitle = cafeTitle.replace("\"","");
-					cafeTitle = cafeTitle.replace("\'","");
-					cafeTitle = cafeTitle.replace("-","");
-					cafeTitle = cafeTitle.replace("/"," ");
-					cafeText = cafeText.replace("\"","");
-					cafeText = cafeText.replace("\'","");
-					cafeText = cafeText.replace("-","");
-					cafeText = cafeText.replace("/"," ");
-					
-					tempSearch.setSer_title(cafeTitle);
+				//카페 제목
+				String cafeTitle = element.select("a.api_txt_lines").text();
+				
+				//카페 검색결과 각 게시글들 가져오기
+				String cafeDate = element.select("span.sub_time").text();
+				
+				//카페 내용 가져오기
+				String cafeText = element.select("div.api_txt_lines").text();
+				cafeText = cafeText.replace("...", "");
+				
+				//현재 날짜 저장
+				Calendar cal = Calendar.getInstance();
+				
+				//다른 수식어들 날짜로 변환해주기
+				if(cafeDate.contains("분 전")) {
+					int tempMin = Integer.parseInt(cafeDate.substring(0, cafeDate.length()-3));
+					cal.add(Calendar.MINUTE, -tempMin);
+					cafeDate = formatDate.format(cal.getTime());
+				}
+				
+				else if(cafeDate.contains("시간 전")) {
+					int tempHour = Integer.parseInt(cafeDate.substring(0, cafeDate.length()-4));
+					cal.add(Calendar.HOUR_OF_DAY, -tempHour);
+					cafeDate = formatDate.format(cal.getTime());
+				}
+				
+				else if(cafeDate.contains("어제")) {
+					cal.add(Calendar.DAY_OF_MONTH, -1);
+					cafeDate = formatDate.format(cal.getTime());
+				}
+				
+				else if(cafeDate.contains("일 전")) {
+					int tempDay = Integer.parseInt(cafeDate.substring(0, cafeDate.length()-3));
+					cal.add(Calendar.DAY_OF_MONTH, -tempDay);
+					cafeDate = formatDate.format(cal.getTime());
+				}
+				
+				//임시 Search 클래스 변수에 저장
+				Search tempSearch = new Search();
+				
+				if(!cafeTitle.equals("") && !cafeText.equals(""))
+				{
+					tempSearch.setSer_title(CharSwitcher.checkIntegrity(cafeTitle));
 					tempSearch.setSer_link(url);
 					tempSearch.setSer_date(cafeDate);
-					tempSearch.setSer_content(cafeText);
+					tempSearch.setSer_content(CharSwitcher.checkIntegrity(cafeText));
 					
 					// 제대로 동작하는지 확인하는 란.
-					System.out.println("글 제목:" + cafeTitle);
-					System.out.println("글 내용:" + cafeText);
+					System.out.println("글 제목:" + CharSwitcher.checkIntegrity(cafeTitle));
+					System.out.println("글 내용:" + CharSwitcher.checkIntegrity(cafeText));
 					System.out.println("게시 일시:" + cafeDate);		
 					System.out.println("글 링크:" + url);
 					
 					//리스트에 저장
 					cafeList.add(tempSearch);
-					
-					crawlCounter++;
 				}
+				crawlCounter++;
 			}
 			
 			//다음 페이지
@@ -367,63 +394,50 @@ class NaverWebCrawler {
 		int sPage = webStart;
 		int ePage = webEnd;
 		
-		while(sPage <= ePage) {
+		while(sPage <= ePage) {			
 			//베이스 번호
-			boolean webOk = true;
-			Document webSearch = null;
-			try {
-				webSearch = Jsoup.connect(webCompleteUrl).get();
-			} catch (Exception e) {
-				System.out.println("web search result url error");
-				webOk = false;
+			Document webSearch = Jsoup.connect(webCompleteUrl).get();
+			
+			//검색할 주소
+			Elements webUrl = webSearch.select("li.bx");
+			
+			int crawlCounter = 0;
+			
+			for(Element element : webUrl) {
+				if(crawlCounter >= 10) {
+					break;
+				}
+				
+				//웹사이트 링크
+				String url = element.select("a.link_tit").attr("href");
+				
+				//웹사이트 제목
+				String webTitle = element.select("a.link_tit").text();
+
+				//웹사이트 내용
+				String webText = element.select("div.api_txt_lines").text();
+				
+				//임시 Search 클래스 변수에 저장
+				Search tempSearch = new Search();
+				
+				if(webTitle.equals("") && webText.equals(""))
+				{
+				tempSearch.setSer_title(CharSwitcher.checkIntegrity(webTitle));
+				tempSearch.setSer_link(url);
+				tempSearch.setSer_date("");
+				tempSearch.setSer_content(CharSwitcher.checkIntegrity(webText));
+				
+				// 제대로 동작하는지 확인하는 란.
+				System.out.println("글 제목:" + CharSwitcher.checkIntegrity(webTitle));
+				System.out.println("글 내용:" + CharSwitcher.checkIntegrity(webText));		
+				System.out.println("글 링크:" + url);
+				
+				//리스트에 저장
+				webList.add(tempSearch);
+				}
+				crawlCounter++;
 			}
 			
-			if(webOk == true) {
-				//검색할 주소
-				Elements webUrl = webSearch.select("li.bx");
-				
-				int crawlCounter = 0;
-				
-				for(Element element : webUrl) {
-					if(crawlCounter >= 10) {
-						break;
-					}
-					
-					//웹사이트 링크
-					String url = element.select("a.link_tit").attr("href");
-					
-					//웹사이트 제목
-					String webTitle = element.select("a.link_tit").text();
-	
-					//웹사이트 내용
-					String webText = element.select("div.api_txt_lines").text();
-					
-					//임시 Search 클래스 변수에 저장
-					Search tempSearch = new Search();
-					webTitle = webTitle.replace("\"","");
-					webTitle = webTitle.replace("\'","");
-					webTitle = webTitle.replace("-","");
-					webTitle = webTitle.replace("/"," ");
-					webText = webText.replace("\"","");
-					webText = webText.replace("\'","");
-					webText = webText.replace("-","");
-					webText = webText.replace("/"," ");
-					tempSearch.setSer_title(webTitle);
-					tempSearch.setSer_link(url);
-					tempSearch.setSer_date("");
-					tempSearch.setSer_content(webText);
-					
-					// 제대로 동작하는지 확인하는 란.
-					System.out.println("글 제목:" + webTitle);
-					System.out.println("글 내용:" + webText);		
-					System.out.println("글 링크:" + url);
-					
-					//리스트에 저장
-					webList.add(tempSearch);
-					
-					crawlCounter++;
-				}
-			}
 			//다음 페이지 이동
 			sPage += 10;
 			webUrlPage = sPage;
@@ -449,26 +463,39 @@ public class CrawlingController {
 		//jsoup-1.13.1.jar 필요함
 		List<Search> searches = new ArrayList<Search>(); //하둡이 아직이니 우선 크롤링 데이터 바로 list 저장
 		
+		if(searchDAO.isExist(keyword)) // 이미 해당 키워드로 검색한 이력이 있을 경우
+		{
+			
+			searches = searchDAO.select(keyword); // 이미 존재하는 테이블에서 자료만 빼옴
+		}
+		else // 해당 키워드로 검색한 이력이 없을 경우
+		{
+			searchDAO.createTable(keyword); // 키워드의 이름으로 테이블 생성
+			
+			NaverBlogCrawler blog = new NaverBlogCrawler(keyword, 1, 991); //100페이지까지 검색됨
+			blog.blogCrawler();
+			searches.addAll(blog.blogList);
+			
+			NaverCafeCrawler cafe = new NaverCafeCrawler(keyword, 1, 991); //100페이지까지 검색됨
+			cafe.cafeCrawler();
+			searches.addAll(cafe.cafeList);
+			
+			NaverWebCrawler web = new NaverWebCrawler(keyword, 1, 81); //10페이지까지 검색됨
+			web.webCrawler();
+			searches.addAll(web.webList);
+			
+			searchDAO.insert(keyword,searches); // 키워드 이름의 테이블에 리스트 삽입
+		}
 		//각 블로그, 카페, 웹에서 크롤링 한 결과 list에 저장
 		//element는 키워드, 시작 페이지 번호, 끝 페이지 번호
 		//페이지 번호는 (현재 페이지-1)X10 + 1
-		NaverBlogCrawler blog = new NaverBlogCrawler(keyword, 1, 981); //100페이지까지 검색됨
-		blog.blogCrawler();
-		searches.addAll(blog.blogList);
 		
-		NaverCafeCrawler cafe = new NaverCafeCrawler(keyword, 1, 981); //100페이지까지 검색됨
-		cafe.cafeCrawler();
-		searches.addAll(cafe.cafeList);
-		
-		NaverWebCrawler web = new NaverWebCrawler(keyword, 1, 81); //10페이지까지 검색됨
-		web.webCrawler();
-		searches.addAll(web.webList);
 		
 		/* 종구 형의 작업 공간*/
 	
 		HttpSession session = request.getSession();
 //		List<Search> searches = new ArrayList<Search>(); // 테스트 내용 지우고 종구형이 작업한거 올려주면 됨
-		searchDAO.insert(searches); // db삽입 문구
+		
 		model.addAttribute("searches", searches); // 페이지 등록 하기 위함
 		
 		/*
@@ -493,3 +520,4 @@ public class CrawlingController {
 		
 	}
 }
+
