@@ -62,18 +62,15 @@ public class UserContorller {
 	{ 
 		HttpSession session = request.getSession();
 		User userChk = userDAO.select(user_email);
-		System.out.println("Email:" + userChk.getUser_email() + "\nPW:" + userChk.getUser_pw());
 		if(userChk !=null && userChk.getUser_pw().equals(user_pw)) // 로그인 성공 시
 		{
 			session.setAttribute("user_no", userChk.getUser_no()); // 로그인 처리는 오직 유저 번호로만 처리하겠음.	
+			return "main/main";
 		}
 		else // 로그인 실패 시   
 		{
-			//response.setContentType("text/html; charset=UTF-8");
-			//PrintWriter out = response.getWriter();
-			//out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
-		//	out.flush();
+			return "member/login_fail";
 		}
-		return "main/main";
+		
 	}
 }

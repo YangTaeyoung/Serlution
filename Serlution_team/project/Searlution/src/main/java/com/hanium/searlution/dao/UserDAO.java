@@ -5,6 +5,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,16 @@ public class UserDAO {
 	public User select(String user_email)
 	{
 		String sql = "select * from user_info where user_email=?";
-		User user = jdbcTemplate.queryForObject(sql, new Object[] {user_email}, new UserMapper());
-		return user;
+		try
+		{
+			User user = jdbcTemplate.queryForObject(sql, new Object[] {user_email}, new UserMapper());
+			return user;
+		}
+		catch(EmptyResultDataAccessException e)
+		{
+			return null;
+		}
+		
 	}
 	public void update(Integer user_no, User user)
 	{

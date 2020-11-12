@@ -46,8 +46,6 @@ public class PageController {
 		else // 로그인 안하면
 			return "search/result"; // 못가지롱
 	}
-	
-	// 
 	@RequestMapping(value="analysis.do", method=RequestMethod.GET)
 	String goAnalysis(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) // 
 	{
