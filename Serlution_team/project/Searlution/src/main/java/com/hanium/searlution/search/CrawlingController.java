@@ -1,15 +1,11 @@
 package com.hanium.searlution.search;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hanium.searlution.dao.HistoryDAO;
 import com.hanium.searlution.dao.SearchDAO;
-import com.hanium.searlution.model.History;
 import com.hanium.searlution.model.Search;
 import com.hanium.searlution.crawler.*;
 
@@ -79,6 +74,11 @@ public class CrawlingController {
 		HttpSession session = request.getSession();
 //		List<Search> searches = new ArrayList<Search>(); // 테스트 내용 지우고 종구형이 작업한거 올려주면 됨
 		
+		for(int i = 0; i < searches.size(); i++)
+		{
+			if(searches.get(i).getSer_content().length() > 100)
+				searches.get(i).setSer_content(searches.get(i).getSer_content().substring(0, 100) + "...");
+		}
 		model.addAttribute("searches", searches); // 페이지 등록 하기 위함
 		
 		/*

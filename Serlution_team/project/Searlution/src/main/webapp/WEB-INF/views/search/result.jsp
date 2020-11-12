@@ -12,11 +12,6 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 		<link rel="stylesheet" href="/searlution/resourses/css/dashboard.css">
 		<script>
-			function limitText(index) {
-				console.log(index);
-				var limitField = document.getElementById("content"+index);
-			    limitField.innerHTML = limitField.innerHTML.substring(0, 100);
-			}
 			
 		</script>
 	</head>
@@ -65,17 +60,17 @@
 		        </h6>
 		        <ul class="nav flex-column mb-2">
 		          <li class="nav-item">
-		            <a class="nav-link" href="#">
+		            <a class="nav-link" href="graph.chart">
 		              <span data-feather="bar-chart-2"></span><span class="font-weight-bold">그래프</span>
 		            </a>
 		          </li>
 		          <li class="nav-item">
-		            <a class="nav-link" href="#">
+		            <a class="nav-link" href="chart">
 		              <span data-feather="pie-chart"></span><span class="font-weight-bold">차트</span>
 		            </a>
 		          </li>
 		          <li class="nav-item">
-		            <a class="nav-link" href="#">
+		            <a class="nav-link" href="chart.wordCloud">
 		              <span data-feather="cloud"></span><span class="font-weight-bold">워드 클라우드</span>
 		            </a>
 		          </li>
@@ -95,9 +90,9 @@
 		          	<c:forEach var="search" items="${searches}" varStatus="status">
 			            <tr>
 			              <td>
-			              	<a class="font-weight-bold" href="${search.ser_link}">${status} ${search.ser_title}</a>
+			              	<a class="font-weight-bold" href="${search.ser_link}">${search.ser_title}</a>
 				              	${search.ser_date}<br/>
-				              	<p id = "content${status}" onload="limitText(${status})">${search.ser_content}</p>
+				              	<p id = "content${status.index}">${search.ser_content}</p>
 			              	<a class="text-secondary" href="${search.ser_link}">${search.ser_link}</a>
 			              </td>     
 			            </tr>
@@ -115,7 +110,7 @@
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-		<script src="../js/dashboard.js"></script>
+		<script src="/searlution/resources/js/dashboard.js"></script>
 	
 	</body>
 </html>
