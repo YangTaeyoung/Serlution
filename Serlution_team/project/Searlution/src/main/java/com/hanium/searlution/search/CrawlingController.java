@@ -80,6 +80,7 @@ public class CrawlingController {
 				searches.get(i).setSer_content(searches.get(i).getSer_content().substring(0, 100) + "...");
 		}
 		model.addAttribute("searches", searches); // 페이지 등록 하기 위함
+		model.addAttribute("keyword", keyword);
 		
 		/*
 		if(session.getAttribute("user_no") != null)

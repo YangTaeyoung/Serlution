@@ -19,7 +19,6 @@
 			}
 		</style>
 		<script>
-
 			window.onload = function() 
 			{
 				location.href="search.do?keyword=${keyword}";

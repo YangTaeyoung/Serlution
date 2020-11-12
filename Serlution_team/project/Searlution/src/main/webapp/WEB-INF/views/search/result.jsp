@@ -12,6 +12,11 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 		<link rel="stylesheet" href="/searlution/resourses/css/dashboard.css">
 		<script>
+			function doSearch()
+			{
+				var keyword = document.getElementById("ser_key").value;
+				location.href ="loading.do?keyword="+keyword;
+			}
 			
 		</script>
 	</head>
@@ -22,19 +27,43 @@
 		  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
-		  <ul class="navbar-nav px-3">
-		      <li class="nav-item">
-		        <a class="nav-link" href="#">로그아웃</a>
+		  
+<%
+	if(session.getAttribute("user_no") == null)
+	{
+	
+%>
+		  <ul class="navbar-nav px-3" >
+		      <li class="nav-item" >
+		        <a class="nav-link" href="/searlution/user/login">로그인</a>
 		      </li>
 		  </ul>
+<% 
+	}
+	else
+	{
+%>  
+
+		  <ul class="navbar-nav px-3" >
+		      <li class="nav-item" >
+		        <a class="nav-link" href="/searlution/user/logout">로그아웃</a>
+		      </li>
+		  </ul>
+<%
+	}
+%>	  
+		  
+		  
+		  
 		  <div class="form-check px-3">
 			  <input class="form-check-input" type="checkbox" value="" id="advertisement">
 			  <label class="form-check-label text-white" for="advertisement">No ad</label>
 		  </div>
-		  <input class="form-control form-control-dark w-60" type="text" placeholder="검색어를 입력하세요." aria-label="검색어를 입력하세요.">
+		  
+		  <input id="ser_key" class="form-control form-control-dark w-60" type="text" placeholder="검색어를 입력하세요." aria-label="검색어를 입력하세요." style="width: 65%">
 		  <ul class="navbar-nav px-3">
 		    <li class="nav-item text-nowrap">
-		      <a class="nav-link font-weight-bold" href="#">Search</a>
+		      <a class="nav-link font-weight-bold" href="#" onclick="doSearch()">Search</a>
 		    </li>
 		  </ul>
 		</nav>
