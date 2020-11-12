@@ -34,6 +34,7 @@ public class NaverGraph {
     	String[] tmpAge = {"1", "2"};
 //        NaverGraphApi graph = new NaverGraphApi("2020-01-01", "2020-04-30", "month", "코로나", "pc", tmpAge , "f");
     	//우선 한달 전은 default로
+    	System.out.println(keyword);
         NaverGraphApi graph = new NaverGraphApi(startDateStr, endDateStr, "date", keyword, null, null , null);
         graph.graphString();
         

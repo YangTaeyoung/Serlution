@@ -44,6 +44,7 @@
 		  </button>
 		  
 <%
+	request.setCharacterEncoding("UTF-8");
 	if(session.getAttribute("user_no") == null)
 	{
 	

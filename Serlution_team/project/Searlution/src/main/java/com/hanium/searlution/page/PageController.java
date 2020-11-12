@@ -1,5 +1,7 @@
 package com.hanium.searlution.page;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -37,8 +39,9 @@ public class PageController {
 	
 	// 그래프로 가는 페이지 컨트롤러
 	@RequestMapping(value="graph.chart", method=RequestMethod.GET)
-	String goGraph(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword)
+	String goGraph(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) throws UnsupportedEncodingException
 	{
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
 		String[] tmpStr = new NaverGraph(keyword).graphStr();
