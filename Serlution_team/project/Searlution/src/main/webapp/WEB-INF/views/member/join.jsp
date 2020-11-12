@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width", initial-scale="1">
 <title>테스트 메인_로그인</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-<link rel="stylesheet" href="/resources/css/cover_white.css">
+<link rel="stylesheet" href="/searlution/resources/css/cover_white.css">
 </head>
 <body class="text-center"> <!-- 가운데 정렬 -->
 
@@ -20,16 +20,16 @@
     <div class="inner">
       <h3 class="masthead-brand">Searlution</h3>
       <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/user/login">로그인</a>
-        <a class="nav-link active" href="/user/join">회원가입</a>
+        <a class="nav-link" href="/searlution">Home</a>
+        <a class="nav-link" href="/searlution/user/login">로그인</a>
+        <a class="nav-link active" href="/searlution/user/join">회원가입</a>
       </nav>
     </div>
   </header>
 
 <!-- 검색창, 로고 -->
    <main role="main" class="inner cover">
-    <form:form commandName="user" action="/join/chk" method="POST">
+    <form:form commandName="user" action="/searlution/user/join/chk" method="POST">
 	    <h4 class="text-left text-body">이메일</h4>
 	  	<div class="input-group input-group-lg mb-4">
 	      <form:input type="email" class="form-control" placeholder="이메일을 입력하세요." aria-label="이메일을 입력하세요." path="user_email"/>
