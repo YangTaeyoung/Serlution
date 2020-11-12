@@ -15,9 +15,24 @@
 			function doSearch()
 			{
 				var keyword = document.getElementById("ser_key").value;
-				location.href ="loading.do?keyword="+keyword;
+				location.href ="loading.do?keyword=" + keyword;
 			}
 			
+			function isLogin(link)
+			{
+				var user_no = "${user_no}";
+				
+				console.log("들어옴?: " + user_no);
+				if(user_no != null)
+				{
+					location.href = link + "?keyword=${keyword}";
+				}
+				else
+				{
+					alert("로그인을 하지 않으면 이용하실 수 없는 서비스입니다.");
+					location.href = "search.do?keyword=${keyword}";
+				}
+			}
 		</script>
 	</head>
 	<body>
@@ -89,17 +104,17 @@
 		        </h6>
 		        <ul class="nav flex-column mb-2">
 		          <li class="nav-item">
-		            <a class="nav-link" href="graph.chart">
+		            <a class="nav-link" href="#" onclick="isLogin('graph.chart')">
 		              <span data-feather="bar-chart-2"></span><span class="font-weight-bold">그래프</span>
 		            </a>
 		          </li>
 		          <li class="nav-item">
-		            <a class="nav-link" href="chart">
+		            <a class="nav-link" href="#" onclick="isLogin('chart')">
 		              <span data-feather="pie-chart"></span><span class="font-weight-bold">차트</span>
 		            </a>
 		          </li>
 		          <li class="nav-item">
-		            <a class="nav-link" href="chart.wordCloud">
+		            <a class="nav-link" href="#" onclick="isLogin('wordCloud.chart')">
 		              <span data-feather="cloud"></span><span class="font-weight-bold">워드 클라우드</span>
 		            </a>
 		          </li>
