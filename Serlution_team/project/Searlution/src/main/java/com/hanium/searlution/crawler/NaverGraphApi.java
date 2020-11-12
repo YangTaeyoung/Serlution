@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-class NaverGraphApi {
+public class NaverGraphApi {
 	
 	String apiUrl;
 	
@@ -24,9 +24,12 @@ class NaverGraphApi {
     Vector<String> labels = new Vector<String> ();
     Vector<String> data = new Vector<String> ();
     
+    String labelString = "";
+    String dataString = "";
+    
     private static String post(String apiUrl, Map<String, String> requestHeaders, String requestBody) {
         HttpURLConnection con = connect(apiUrl);
-
+        
         try {
             con.setRequestMethod("POST");
             for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
@@ -122,10 +125,16 @@ class NaverGraphApi {
         	labels.add(tempLabel[i].substring(5, 10));
         }
         
-//        //label test
-//        for(int i=0; i<labels.size();i++) {
-//        	System.out.println(labels.get(i));
-//        }
+        //label string 대입
+        labelString = labelString + "[";
+
+        for(int i=0; i<labels.size();i++) {
+        	labelString = labelString + "\'" + labels.get(i) + "\'";
+        	if(i != labels.size()-1) {
+        		labelString = labelString + ", ";
+        	}
+        }
+        labelString = labelString + "]";
         
         //data값 가져오기
         String[] tempData = tempBody[1].split("\"ratio\":");
@@ -135,13 +144,18 @@ class NaverGraphApi {
         	} else {
         		data.add("100");
         	}
-        	
         }
         
-//        //data test
-//        for(int i=0; i<data.size();i++) {
-//        	System.out.println(data.get(i));
-//        }
+        //data string 대입
+        dataString = dataString + "[";
+
+        for(int i=0; i<data.size();i++) {
+        	dataString = dataString + data.get(i);
+        	if(i != data.size()-1) {
+        		dataString = dataString + ", ";
+        	}
+        }
+        dataString = dataString + "]";
 	 }
 
 }

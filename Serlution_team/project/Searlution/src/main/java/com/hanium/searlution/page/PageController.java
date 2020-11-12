@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hanium.searlution.crawler.*;
+
 @Controller
 public class PageController {
 	
@@ -38,8 +40,12 @@ public class PageController {
 	String goGraph(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword)
 	{
 		HttpSession session = request.getSession();
+		
+		String[] tmpStr = new NaverGraph(keyword).graphStr();
 		// model.addattribute("변수명: 넘길 값의 이름", 넘길 실제 값): jsp 페이지로 넘기고 싶은 값을 전달함.  
 		// 받을 떄는 JSTL을 통해서 받아야 함. JSP 내부에서 사용하는 예시: ${변수명} 밑에 키워드 값을 넘기는 예제 있음.
+		model.addAttribute("label", tmpStr[0]);
+		model.addAttribute("data", tmpStr[1]);
  		model.addAttribute("keyword", keyword); // 키워드를 헤당 페이지에 넘김. 받는 JSP페이지 -> ${keyword}로 받음
 		if(session.getAttribute("user_no") != null) // 로그인 시
 			return "result/chart/graph"; // 그래프 페이지로 이동
