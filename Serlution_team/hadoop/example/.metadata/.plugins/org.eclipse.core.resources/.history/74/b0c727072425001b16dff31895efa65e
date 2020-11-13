@@ -1,0 +1,11 @@
+package hadoopWordcount;
+
+import java.io.IOException;
+
+public class Test {
+	public static void main(String args[]) throws ClassNotFoundException, IOException, InterruptedException
+	{
+		WordCount wd = new WordCount("/home/ubuntu/set.txt","/home/ubuntu/babo/");
+		wd.execute();
+	}
+}

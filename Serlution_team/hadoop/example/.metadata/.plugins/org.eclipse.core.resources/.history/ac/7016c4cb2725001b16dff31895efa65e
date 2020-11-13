@@ -1,0 +1,100 @@
+package hadoopWordcount;
+
+import org.apache.hadoop.conf.Configuration;
+import java.util.ArrayList;
+import java.io.File;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import java.util.StringTokenizer;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.mapreduce.Mapper;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+import java.io.*;
+
+public class WordCount {
+	
+	ArrayList<keySet> list = new ArrayList<keySet>();
+	String inputPath;
+	String outputPath;
+  
+	WordCount(String inputPath, String outputPath)
+	{
+		this.inputPath = inputPath;
+		this.outputPath = outputPath;
+	}
+	
+	void deletef() {
+		String path ="/home/ubuntu/babo";
+		
+		try {
+			File folder = new File(path);
+			while(folder.exists()) {
+				File[] folder_list = folder.listFiles();
+				
+				for (int j = 0; j < folder_list.length; j++) {
+					folder_list[j].delete();
+				}
+				if(folder_list.length==0&&folder.isDirectory()) folder.delete();
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+	}
+	@SuppressWarnings("deprecation")
+   void execute() throws IOException, ClassNotFoundException, InterruptedException
+   {
+        Configuration conf = new Configuration();
+       
+        Job job = new Job(conf, "WordCount");
+        
+        job.setJarByClass(WordCount.class);
+        job.setMapperClass(WordCountMapper.class);
+        job.setReducerClass(WordCountReducer.class);
+        
+        TextInputFormat.addInputPath(job, new Path(inputPath));
+        TextOutputFormat.setOutputPath(job, new Path(outputPath));
+        job.setInputFormatClass(TextInputFormat.class);
+        job.setOutputFormatClass(TextOutputFormat.class);
+        
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+        
+        job.waitForCompletion(true);
+        File file = new File("/home/ubuntu/babo/part-r-00000");
+        FileReader file_reader =new FileReader(file);
+        int cur = 0;
+        int twenty = 20;
+        while((cur = file_reader.read()) != -1 && twenty-- !=0)
+        {
+        	Text a = new Text();
+        	IntWritable b = new IntWritable();
+        	
+        	System.out.print((char)cur);
+        }
+        file_reader.close();
+        deletef();
+    }
+ 
+}
+
+class keySet {
+	private String key;
+	private int value;
+
+	keySet(Text a,IntWritable b) {
+		key =a.toString();
+		value = b.get();
+	}
+}
+
+
