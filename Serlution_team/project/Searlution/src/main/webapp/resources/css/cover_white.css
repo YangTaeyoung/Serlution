@@ -16,6 +16,13 @@ a:hover {
   text-shadow: none; /* Prevent inheritance from `body` */
   background-color: #444;
 }
+
+.btn-secondary:hover,
+.btn-secondary:focus
+{
+	
+}
+
 /*
  * Base structure
  */

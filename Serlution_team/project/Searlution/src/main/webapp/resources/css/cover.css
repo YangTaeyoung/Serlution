@@ -17,6 +17,12 @@ a:hover {
   background-color: #444;
 }
 
+.btn-secondary:hover,
+.btn-secondary:focus
+{
+	
+}
+
 /*
  * Base structure
  */
