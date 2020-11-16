@@ -20,11 +20,12 @@
 			
 			function isLogin(link)
 			{
-				var user_no = "${user_no}";
+				var user_no = "${session.user_no}";
 				
-				console.log("들어옴?: " + user_no);
-				if(user_no != null)
+				console.log("들어옴?: " + session.user_no);
+				if(session.user_no > 0)
 				{
+					alert("왔니");
 					location.href = link + "?keyword=${keyword}";
 				}
 				else
