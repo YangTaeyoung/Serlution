@@ -1,6 +1,7 @@
 package com.hanium.searlution.page;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,15 +18,15 @@ import com.hanium.searlution.crawler.*;
 public class PageController {
 	
 	// 로딩중으로 가는 페이지 컨트롤러
-	@RequestMapping(value="loading.do", method=RequestMethod.GET)
+	@RequestMapping(value="result/loading" , method=RequestMethod.GET)
 	public String goLoading(Model model,@RequestParam("keyword") String keyword) 
 	{
 		model.addAttribute("keyword", keyword);
 		return "search/loading";
 	}
-	
+
 	// 원형 차트로 가는 페이지 컨트롤러
-	@RequestMapping(value="circle.chart", method=RequestMethod.GET)
+	@RequestMapping(value="chart/circle", method=RequestMethod.GET)
 	String goCircle(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) // 원형 차트 페이지 이동 
 	{
 		HttpSession session = request.getSession();
@@ -38,7 +39,7 @@ public class PageController {
 	}
 	
 	// 그래프로 가는 페이지 컨트롤러
-	@RequestMapping(value="graph.chart", method=RequestMethod.GET)
+	@RequestMapping(value="chart/graph", method=RequestMethod.GET)
 	String goGraph(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) throws UnsupportedEncodingException
 	{
 		request.setCharacterEncoding("UTF-8");
@@ -55,8 +56,9 @@ public class PageController {
 		else // 로그인 안하면
 			return "search/result"; // 못가지롱
 	}
+	
 	@RequestMapping(value="analysis.do", method=RequestMethod.GET)
-	String goAnalysis(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) // 
+	String goAnalysis(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) // 지금은 사용 안함.
 	{
 		HttpSession session = request.getSession();
 		model.addAttribute("keyword", keyword);

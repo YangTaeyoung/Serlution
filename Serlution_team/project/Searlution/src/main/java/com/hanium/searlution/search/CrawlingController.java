@@ -48,8 +48,7 @@ public class CrawlingController {
 		}
 		else // 해당 키워드를 담은 테이블이 존재하지 않는 경우
 		{
-			searchDAO.createTable(keyword); // 키워드의 이름으로 테이블 생성
-			
+				
 			NaverBlogCrawler blog = new NaverBlogCrawler(keyword, 1, 991); //100페이지까지 검색됨
 			blog.blogCrawler();
 			searches.addAll(blog.blogList);

@@ -65,6 +65,12 @@ public class UserDAO {
 		jdbcTemplate.update(sql, user.getUser_nickname(), user.getUser_phone(), user_no);
 	}
 	
+	public void changePassword(int user_no, String password)
+	{
+		String sql = "update user_info set user_pw = ? where user_no = ?";
+		jdbcTemplate.update(sql, password, user_no);
+	}
+	
 	// 트렌젝션 처리가 필요할 경우 사용
 	@Transactional
 	public void sampleTransaction(User student) 

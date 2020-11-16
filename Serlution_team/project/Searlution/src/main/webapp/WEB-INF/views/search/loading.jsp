@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<title>검색이 찾은 해답, Searlution</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-	<link rel="stylesheet" href="resources/css/cover.css">
+	<link rel="stylesheet" href="/searlution/resources/css/cover.css">
 	</head>
 	
 		<style>
@@ -21,7 +21,7 @@
 		<script>
 			window.onload = function() 
 			{
-				location.href="search.do?keyword=${keyword}";
+				location.href="/searlution/search.do?keyword=${keyword}";
 			}
 		</script>
 	<body>
@@ -65,7 +65,7 @@
 		<!-- 검색창, 로고 -->
 		<main role="main" class="inner cover">
 			<div class="mx-auto" style="width: 255px;">
-			  	 <img class="img-fluid" src="resources/image/loading.gif" alt="현재 브라우저는 본 형식을 지원하지 않습니다.">
+			  	 <img class="img-fluid" src="/searlution/resources/image/loading.gif" alt="현재 브라우저는 본 형식을 지원하지 않습니다.">
 			  	 
 			  	 
 			</div>

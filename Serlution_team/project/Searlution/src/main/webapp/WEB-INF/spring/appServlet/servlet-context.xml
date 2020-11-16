@@ -41,7 +41,7 @@
 		</beans:property> 
 			
 		<beans:property name="username" value="yang"/> 
-		<beans:property name="password" value="1234"/> 
+		<beans:property name="password" value="yang968741--"/> 
 	</beans:bean>
 	
 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

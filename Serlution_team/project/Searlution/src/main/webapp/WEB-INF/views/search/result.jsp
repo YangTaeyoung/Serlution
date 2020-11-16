@@ -15,7 +15,7 @@
 			function doSearch()
 			{
 				var keyword = document.getElementById("ser_key").value;
-				location.href ="loading.do?keyword=" + keyword;
+				location.href ="result/loading?keyword=" + keyword;
 			}
 			
 			function isLogin(link)
@@ -105,7 +105,7 @@
 		        </h6>
 		        <ul class="nav flex-column mb-2">
 		          <li class="nav-item">
-		            <a class="nav-link" href="#" onclick="isLogin('graph.chart')">
+		            <a class="nav-link" href="#" onclick="isLogin('chart/graph')">
 		              <span data-feather="bar-chart-2"></span><span class="font-weight-bold">그래프</span>
 		            </a>
 		          </li>
@@ -115,7 +115,7 @@
 		            </a>
 		          </li>
 		          <li class="nav-item">
-		            <a class="nav-link" href="#" onclick="isLogin('wordCloud.chart')">
+		            <a class="nav-link" href="#" onclick="isLogin('chart/wordcloud')">
 		              <span data-feather="cloud"></span><span class="font-weight-bold">워드 클라우드</span>
 		            </a>
 		          </li>

@@ -70,7 +70,7 @@
 		<!-- 검색창, 로고 -->
 		  <main role="main" class="inner cover">
 		    <img class="img-fluid" src="/searlution/resources/image/main_logo.png" alt="씨바 왜 적용이 안되냐">
-		    <form action="/searlution/loading.do" method="get">
+		    <form action="/searlution/result/loading" method="get">
 			  	<div class="input-group input-group-lg mb-3">
 				    <input type="text" class="form-control" placeholder="검색어를 입력하세요." aria-label="검색어를 입력하세요." name="keyword">
 				    <div class="input-group-append">
