@@ -48,7 +48,6 @@ public class CrawlingController {
 		}
 		else // 해당 키워드를 담은 테이블이 존재하지 않는 경우
 		{
-				
 			NaverBlogCrawler blog = new NaverBlogCrawler(keyword, 1, 991); //100페이지까지 검색됨
 			blog.blogCrawler();
 			searches.addAll(blog.blogList);
@@ -60,7 +59,7 @@ public class CrawlingController {
 			NaverWebCrawler web = new NaverWebCrawler(keyword, 1, 81); //10페이지까지 검색됨
 			web.webCrawler();
 			searches.addAll(web.webList);
-			
+			searchDAO.pushKey(keyword);
 			searchDAO.insert(keyword,searches); // 키워드 이름의 테이블에 리스트 삽입
 		}
 		//각 블로그, 카페, 웹에서 크롤링 한 결과 list에 저장
