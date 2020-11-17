@@ -1,12 +1,12 @@
 package com.hanium.searlution.search;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,12 +34,18 @@ public class CrawlingController {
 	@Autowired
 	private HistoryDAO historyDAO;
 	
+	@Autowired
+	ServletContext servletContext;
+	
 	@RequestMapping(value="search.do")
 	public String searchDo(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) throws IOException
 	{
 		/* 도경이는 여기서 작업하면 됨. */
 		//jsoup-1.13.1.jar 필요함
+		
+		
 		List<Search> searches = new ArrayList<Search>(); //하둡이 아직이니 우선 크롤링 데이터 바로 list 저장
+		
 		
 		if(searchDAO.isExist(keyword)) // 해당 키워드를 담은 테이블이 데이터 베이스에 존재하는 경우
 		{
@@ -67,16 +73,37 @@ public class CrawlingController {
 		//페이지 번호는 (현재 페이지-1)X10 + 1
 		
 		
-		/* 종구 형의 작업 공간*/
+		
 	
 		HttpSession session = request.getSession();
 //		List<Search> searches = new ArrayList<Search>(); // 테스트 내용 지우고 종구형이 작업한거 올려주면 됨
 		
+		System.out.println(servletContext.getContextPath());
 		for(int i = 0; i < searches.size(); i++)
 		{
 			if(searches.get(i).getSer_content().length() > 100)
 				searches.get(i).setSer_content(searches.get(i).getSer_content().substring(0, 100) + "...");
 		}
+		
+		try
+		{
+			OutputStream os = new FileOutputStream(servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt");
+			byte[] by;
+			for(int i = 0; i < searches.size(); i++)
+			{
+				by = searches.get(i).getSer_title().getBytes();
+				os.write(by);
+				by = searches.get(i).getSer_content().getBytes();
+				os.write(by);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		/* 종구 형의 작업 공간*/
+		
 		model.addAttribute("searches", searches); // 페이지 등록 하기 위함
 		model.addAttribute("keyword", keyword);
 		
