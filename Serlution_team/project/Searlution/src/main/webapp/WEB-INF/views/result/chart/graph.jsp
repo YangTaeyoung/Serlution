@@ -84,12 +84,139 @@
             <button type="button" class="btn btn-sm btn-outline-secondary">
             <span data-feather="share"></span>Export</button>
           </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>최근 한 달
-          </button>
+          <a class="btn btn-secondary" data-toggle="modal" href="#dateModal">검색 옵션</a>
         </div>
       </div>
-
+	
+	<div class="modal fade" id="dateModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+	  	<div class="modal-dialog">
+	  		<div class="modal-content">
+	  			<div class="modal-header">
+	  				<h5 class="modal-title" id="modal">검색 옵션</h5>
+	  				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  					<span aria-hidden="true"><span data-feather="x"></span></span>
+	  				</button>
+	  			</div>
+	  			<div class="modal-body">
+	  				<form>
+	  					<div class="form-group">
+  							<label>기간</label>
+  							<span class="form-control">
+	  							<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="dateRadio" id="dateRadio1" value="oneMonth">
+								  <label class="form-check-label" for="dateRadio1">1개월</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="dateRadio" id="dateRadio2" value="threeMonth">
+								  <label class="form-check-label" for="dateRadio2">3개월</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="dateRadio" id="dateRadio3" value="oneYear">
+								  <label class="form-check-label" for="dateRadio3">1년</label>
+								</div>
+  							</span>
+  						</div>
+  						<div class="form-group">
+  							<label>범위</label>
+  							<span class="form-control">
+  								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="rangeCheckbox" id="rangeCheckbox0">
+								  <label class="form-check-label" for="rangeCheckbox0">전체</label>
+								</div>
+	  							<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="rangeCheckbox" id="rangeCheckbox1" value="mo">
+								  <label class="form-check-label" for="rangeCheckbox1">모바일</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="rangeCheckbox" id="rangeCheckbox2" value="pc">
+								  <label class="form-check-label" for="rangeCheckbox2">PC</label>
+								</div>
+  							</span>
+  						</div>
+  						<div class="form-group">
+  							<label>성별</label>
+  							<span class="form-control">
+  								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="genderCheckbox" id="genderCheckbox0">
+								  <label class="form-check-label" for="genderCheckbox0">전체</label>
+								</div>
+	  							<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="genderCheckbox" id="genderCheckbox1" value="f">
+								  <label class="form-check-label" for="genderCheckbox1">여성</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="genderCheckbox" id="genderCheckbox2" value="m">
+								  <label class="form-check-label" for="genderCheckbox2">남성</label>
+								</div>
+  							</span>
+  						</div>
+  						<div class="form-group">
+  							<label>연령</label>
+  							<span class="form-control">
+  								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox0">
+								  <label class="form-check-label" for="ageCheckbox0">전체</label>
+								</div>
+	  							<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox1" value="1">
+								  <label class="form-check-label" for="ageCheckbox1">0-12세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox2" value="2">
+								  <label class="form-check-label" for="ageCheckbox2">13-18세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox3" value="3">
+								  <label class="form-check-label" for="ageCheckbox3">19-24세</label>
+								</div>
+							</span>
+							<span class="form-control">
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox4" value="4">
+								  <label class="form-check-label" for="ageCheckbox4">25-29세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox5" value="5">
+								  <label class="form-check-label" for="ageCheckbox5">30-34세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox6" value="6">
+								  <label class="form-check-label" for="ageCheckbox6">35-39세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox7" value="7">
+								  <label class="form-check-label" for="ageCheckbox7">40-44세</label>
+								</div>
+							</span>
+							<span class="form-control">
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox8" value="8">
+								  <label class="form-check-label" for="ageCheckbox8">45-49세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox9" value="9">
+								  <label class="form-check-label" for="ageCheckbox9">50-54세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox10" value="10">
+								  <label class="form-check-label" for="ageCheckbox10">55-60세</label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="checkbox" name="ageCheckbox" id="ageCheckbox11" value="11">
+								  <label class="form-check-label" for="ageCheckbox11">60세이상</label>
+								</div>
+  							</span>
+  						</div>
+	  				</form>
+	  			</div>
+	  			<div class="modal-footer">
+	  				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	  				<button type="button" class="btn btn-info" onclick="doGraph()" data-dismiss="modal">적용하기</button>
+	  			</div>
+	  		</div>
+	  	</div>
+	  </div>
+	
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
     </main>
@@ -102,6 +229,112 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+<script>
+function goGraph()
+{
+	var tmpString = "chart/graph?keyword=${keyword}";
+	
+	var check_date = document.getElementsByName("dateRadio").length;
+	var check_range = document.getElementsByName("rangeCheckbox").length;
+	var check_gender = document.getElementsByName("genderCheckbox").length;
+	var check_age = document.getElementsByName("ageCheckbox").length;
+	
+	var bool_date = null;
+	var bool_range = null;
+	var bool_gender = null;
+	var bool_age = null;
+	
+	for(var i=0; i<check_date; i++) {
+		if(document.getElementsByName("dateRadio")[i].checked == true) {
+			bool_date = true;
+		}
+	}
+	for(var i=0; i<check_range; i++) {
+		if(document.getElementsByName("rangeCheckbox")[i].checked == true) {
+			bool_range = true;
+		}
+	}
+	for(var i=0; i<check_gender; i++) {
+		if(document.getElementsByName("genderCheckbox")[i].checked == true) {
+			bool_gender = true;
+		}
+	}
+	for(var i=0; i<check_age; i++) {
+		if(document.getElementsByName("ageCheckbox")[i].checked == true) {
+			bool_age = true;
+		}
+	}
+	
+	if(bool_date != null) {
+		for(var i=0; i<check_date; i++) {
+			if(document.getElementsByName("dateRadio")[i].checked == true) {
+				tmpString = tmpString + "&date=" + document.getElementsByName("dateRadio")[i].value;
+			}
+		}
+	}
+	if(bool_range != null) {
+		for(var i=1; i<check_range; i++) {
+			if(document.getElementsByName("rangeCheckbox")[i].checked == true) {
+				tmpString = tmpString + "&range=" + document.getElementsByName("rangeCheckbox")[i].value;
+			}
+		}
+	}
+	if(bool_gender != null) {
+		for(var i=1; i<check_gender; i++) {
+			if(document.getElementsByName("genderCheckbox")[i].checked == true) {
+				tmpString = tmpString + "&gender=" + document.getElementsByName("genderCheckbox")[i].value;
+			}
+		}
+	}
+	if(bool_age != null) {
+		for(var i=1; i<check_age; i++) {
+			if(document.getElementsByName("ageCheckbox")[i].checked == true) {
+				tmpString = tmpString + "&age=" + document.getElementsByName("ageCheckbox")[i].value;
+			}
+		}
+	}
+	if(bool_date == null||bool_range == null||bool_gender == null||bool_age==null) {
+		alert("모든 항목을 입력해 주세요.");
+	}
+	else{
+		location.href = tmpString;
+	}
+}
+</script>
+
+<script>
+/*전체 선택 함수*/
+	$('#rangeCheckbox0').click(function () {
+		if($("input:checkbox[id='rangeCheckbox0']").prop("checked")){
+			$("input[type=checkbox][name='rangeCheckbox']").prop("checked", true);
+		} else {
+			$("input[type=checkbox][name='rangeCheckbox']").prop("checked", false);
+		}
+	});
+</script>
+
+<script>
+	$('#genderCheckbox0').click(function () {
+		if($("input:checkbox[id='genderCheckbox0']").prop("checked")){
+			$("input[type=checkbox][name='genderCheckbox']").prop("checked", true);
+		} else {
+			$("input[type=checkbox][name='genderCheckbox']").prop("checked", false);
+		}
+	});
+</script>
+
+<script>
+	$('#ageCheckbox0').click(function () {
+		if($("input:checkbox[id='ageCheckbox0']").prop("checked")){
+			$("input[type=checkbox][name='ageCheckbox']").prop("checked", true);
+		} else {
+			$("input[type=checkbox][name='ageCheckbox']").prop("checked", false);
+		}
+	});
+</script>
+
+
 <script>
 /* globals Chart:false, feather:false */
 

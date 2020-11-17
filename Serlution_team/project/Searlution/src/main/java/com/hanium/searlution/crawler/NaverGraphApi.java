@@ -111,7 +111,7 @@ public class NaverGraphApi {
         	requestBody = requestBody + "]";
         }
         if(gender != null) {
-        	requestBody = requestBody + ",\"gender\":\"f\"";
+        	requestBody = requestBody + ",\"gender\":\"" + gender + "\"";
         }
         requestBody = requestBody + "}";
     }
