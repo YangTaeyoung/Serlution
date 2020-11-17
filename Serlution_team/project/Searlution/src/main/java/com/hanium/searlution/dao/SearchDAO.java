@@ -86,7 +86,7 @@ public class SearchDAO {
 			insert(keyword, searches.get(i));
 		}
 	}
-	public void saveFile(String keyword)
+	public String saveFile(String keyword)
 	{
 		List<Search> searches = select(keyword);
 
@@ -107,5 +107,6 @@ public class SearchDAO {
 		{
 			System.out.println(e.getMessage());
 		}
+		return servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt";
 	}
 }

@@ -101,7 +101,7 @@ public class CrawlingController {
 		else // keyword라는 내용으로 검색을 한 적이 없는 경우, 즉, DB에 저장된 내역이 없는 경우
 		{
 			// input 파일 생성을 위한 저장
-			searchDAO.saveFile(keyword); // 파일 저장 함수. 동작 안할 시 없애고 밑에 주석 풀 것. 근데 아마 동작할 듯. 
+			String realPath = searchDAO.saveFile(keyword); // realpath에 저장되는 것은 파일의 풀 경로. 파일 저장 함수. 동작 안할 시 없애고 밑에 주석 풀 것. 근데 아마 동작할 듯. 
 //			try // 파일 예외처리.
 //			{
 //				OutputStream os = new FileOutputStream(servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt"); // resource\wordCount 폴더에 검색한 단어_key.txt파일로 저장 제목, 내용의 연속
