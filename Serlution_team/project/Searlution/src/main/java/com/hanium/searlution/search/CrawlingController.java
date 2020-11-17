@@ -96,7 +96,7 @@ public class CrawlingController {
 		
 		if(searchDAO.isExist(keyword)) // 이미 keyword로 검색을 한 경우. 다시 말해 이미 wordcount로 조회한 내역이 DB내에 존재하는 경우.
 		{
-			resultWCs = wordCountDAO.select(keyword); // DB에 저장된 값을 리스트에 그냥 받아옴.
+			// resultWCs = wordCountDAO.select(keyword); // DB에 저장된 값을 리스트에 그냥 받아옴. ★ 이것도 작업 끝나면 주석 풀어주셈. 일단 정상 동작을 위해 주석처리
 		}
 		else // keyword라는 내용으로 검색을 한 적이 없는 경우, 즉, DB에 저장된 내역이 없는 경우
 		{
