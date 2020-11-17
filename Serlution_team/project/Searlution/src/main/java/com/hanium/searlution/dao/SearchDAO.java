@@ -92,6 +92,7 @@ public class SearchDAO {
 
 		try // 파일 예외처리.
 		{
+			System.out.println(servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt");
 			OutputStream os = new FileOutputStream(servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt"); // resource\wordCount 폴더에 검색한 단어_key.txt파일로 저장 제목, 내용의 연속
 			byte[] by; // 바이트 형 배열형성
 			for(int i = 0; i < searches.size(); i++)
