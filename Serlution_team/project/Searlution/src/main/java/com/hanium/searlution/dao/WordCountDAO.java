@@ -1,7 +1,10 @@
 package com.hanium.searlution.dao;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +12,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.hanium.searlution.mapper.WordCountMapper;
+import com.hanium.searlution.model.Search;
 import com.hanium.searlution.model.WordCount;
 
 @Component
 public class WordCountDAO {
+
 	
 private JdbcTemplate jdbcTemplate;
 	
@@ -40,4 +45,5 @@ private JdbcTemplate jdbcTemplate;
 		List<WordCount> wordCounts = jdbcTemplate.query(sql, new WordCountMapper());
 		return wordCounts;
 	}
+
 }

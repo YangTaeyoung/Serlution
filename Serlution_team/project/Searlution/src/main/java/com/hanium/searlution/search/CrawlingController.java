@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hanium.searlution.dao.HistoryDAO;
 import com.hanium.searlution.dao.SearchDAO;
+import com.hanium.searlution.dao.WordCountDAO;
 import com.hanium.searlution.model.Search;
+import com.hanium.searlution.model.WordCount;
 import com.hanium.searlution.crawler.*;
 
 
@@ -33,6 +35,9 @@ public class CrawlingController {
 	
 	@Autowired
 	private HistoryDAO historyDAO;
+	
+	@Autowired
+	private WordCountDAO wordCountDAO;
 	
 	@Autowired
 	ServletContext servletContext;
@@ -78,32 +83,58 @@ public class CrawlingController {
 		HttpSession session = request.getSession();
 //		List<Search> searches = new ArrayList<Search>(); // 테스트 내용 지우고 종구형이 작업한거 올려주면 됨
 		
-		System.out.println(servletContext.getContextPath());
-		for(int i = 0; i < searches.size(); i++)
+		/* 아래 내용부터 종구형의 input파일을 저장하는 알고리즘임. */
+		
+		
+		
+		
+		List<WordCount> resultWCs; // 종구형 가공 이후에 나온 카운트 리스트
+		
+		
+		
+		// wordCountDAO.insert(resultWCs, keyword); // 다 작성하면 주석 제거할 것.
+		
+		if(searchDAO.isExist(keyword)) // 이미 keyword로 검색을 한 경우. 다시 말해 이미 wordcount로 조회한 내역이 DB내에 존재하는 경우.
+		{
+			resultWCs = wordCountDAO.select(keyword); // DB에 저장된 값을 리스트에 그냥 받아옴.
+		}
+		else // keyword라는 내용으로 검색을 한 적이 없는 경우, 즉, DB에 저장된 내역이 없는 경우
+		{
+			// input 파일 생성을 위한 저장
+			searchDAO.saveFile(keyword); // 파일 저장 함수. 동작 안할 시 없애고 밑에 주석 풀 것. 근데 아마 동작할 듯. 
+//			try // 파일 예외처리.
+//			{
+//				OutputStream os = new FileOutputStream(servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt"); // resource\wordCount 폴더에 검색한 단어_key.txt파일로 저장 제목, 내용의 연속
+//				byte[] by; // 바이트 형 배열형성
+//				for(int i = 0; i < searches.size(); i++)
+//				{
+//					by = searches.get(i).getSer_title().getBytes(); // 받아온 객채 내의 제목 스트링을 바이트 형식으로 변환. txt파일에 쓰려면 바이트 형식이어야 하므로.
+//					os.write(by); // 제목 저장
+//					by = searches.get(i).getSer_content().getBytes(); // 내용 스트링을 바이트 형식으로 변환
+//					os.write(by); // 내용 저장
+//				}
+//			}
+//			catch(Exception e) 
+//			{
+//				System.out.println(e.getMessage());
+//			}
+			
+			/* 종구 형의 작업 공간 wordCount돌리고 어쩌구 저쩌구*/
+			
+			
+			// 이 부분에서 리스트 resultWCs안에 종구형이 작업한 동작하는 카운트를 넣어 주어야 함. get, set함수 이용
+			
+			// wordCountDAO.insert(resultWCs, keyword); db에 저장하는 함수, wordcount 작업 끝나면 풀 것.
+			
+		}
+		
+		for(int i = 0; i < searches.size(); i++) // 출력전 내용을 100글자로 자르는 알고리즘
 		{
 			if(searches.get(i).getSer_content().length() > 100)
 				searches.get(i).setSer_content(searches.get(i).getSer_content().substring(0, 100) + "...");
 		}
 		
-		try
-		{
-			OutputStream os = new FileOutputStream(servletContext.getRealPath("/resources/wordCount/") + keyword+"_key.txt");
-			byte[] by;
-			for(int i = 0; i < searches.size(); i++)
-			{
-				by = searches.get(i).getSer_title().getBytes();
-				os.write(by);
-				by = searches.get(i).getSer_content().getBytes();
-				os.write(by);
-			}
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		
-		/* 종구 형의 작업 공간*/
-		
+		// model.addAttribute("wordCounts", resultWCs); 종구 형 작업 끝나면 풀 것. 페이지에 wordcount 내역을 저장하기 위함.
 		model.addAttribute("searches", searches); // 페이지 등록 하기 위함
 		model.addAttribute("keyword", keyword);
 		
