@@ -8,7 +8,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width", initial-scale="1">
-		<title>테스트 결과_비로그인_링크</title>
+		<title>게시물 검색 결과</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
 		<link rel="stylesheet" href="/searlution/resourses/css/dashboard.css">
 		<script>
@@ -111,7 +111,7 @@
 		            </a>
 		          </li>
 		          <li class="nav-item">
-		            <a class="nav-link" href="#" onclick="isLogin('chart')">
+		            <a class="nav-link" href="#" onclick="isLogin('chart/circle')">
 		              <span data-feather="pie-chart"></span><span class="font-weight-bold">차트</span>
 		            </a>
 		          </li>
