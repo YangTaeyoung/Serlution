@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%request.setCharacterEncoding("UTF-8"); %>
+<% request.setCharacterEncoding("UTF-8"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,12 +104,34 @@
 	
 	//차트 데이터
 	var donutData = {
-			labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], 
+			labels: [
+				 '${wordCounts[0].word_name}',
+				 '${wordCounts[1].word_name}', 
+				 '${wordCounts[2].word_name}', 
+				 '${wordCounts[3].word_name}', 
+				 '${wordCounts[4].word_name}', 
+				 '${wordCounts[5].word_name}', 
+				 '${wordCounts[6].word_name}', 
+				 '${wordCounts[7].word_name}', 
+				 '${wordCounts[8].word_name}', 
+				 '${wordCounts[9].word_name}'
+				
+				], 
 			datasets: [
 				{ 
 					backgroundColor: colors.slice(0,10), 
 					borderWidth: 0, 
-					data: [74, 11, 40, 30, 120, 15, 20, 8, 24, 60] 
+					data: [
+						${wordCounts[0].word_count},
+						${wordCounts[1].word_count}, 
+						${wordCounts[2].word_count}, 
+						${wordCounts[3].word_count}, 
+						${wordCounts[4].word_count}, 
+						${wordCounts[5].word_count}, 
+						${wordCounts[6].word_count}, 
+						${wordCounts[7].word_count}, 
+						${wordCounts[8].word_count}, 
+						${wordCounts[9].word_count}] 
 				}
 			]
 	};

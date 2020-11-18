@@ -1,11 +1,13 @@
 package com.hanium.searlution.page;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hanium.searlution.crawler.*;
+import com.hanium.searlution.dao.WordCountDAO;
+import com.hanium.searlution.model.WordCount;
 
 @Controller
 public class PageController {
+	
+	@Autowired
+	private WordCountDAO wordCountDAO;
 	
 	// 로딩중으로 가는 페이지 컨트롤러
 	@RequestMapping(value="result/loading" , method=RequestMethod.GET)
@@ -30,10 +37,14 @@ public class PageController {
 	String goCircle(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) // 원형 차트 페이지 이동 
 	{
 		HttpSession session = request.getSession();
+		List<WordCount> wordCounts = wordCountDAO.selectByRank(keyword);
 		
-		model.addAttribute("keyword", keyword);
 		if(session.getAttribute("user_no") != null) // 로그인시
+		{
+			model.addAttribute("wordCounts",wordCounts);
+			model.addAttribute("keyword", keyword);
 			return "result/chart/circle";  // 원형차트 페이지로 이동하겠음.
+		}
 		else
 			return "search/result";
 	}
