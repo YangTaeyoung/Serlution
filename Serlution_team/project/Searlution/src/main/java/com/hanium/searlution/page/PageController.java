@@ -49,6 +49,23 @@ public class PageController {
 			return "search/result";
 	}
 	
+	// 워드 클라우드로 가는 페이지 컨트롤러
+	@RequestMapping(value="chart/wordcloud", method=RequestMethod.GET)
+	String goWordCloud(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) // 원형 차트 페이지 이동 
+	{
+		HttpSession session = request.getSession();
+		List<WordCount> wordCounts = wordCountDAO.selectByRank(keyword);
+		
+		if(session.getAttribute("user_no") != null) // 로그인시
+		{
+			model.addAttribute("wordCounts",wordCounts);
+			model.addAttribute("keyword", keyword);
+			return "result/chart/wordcloud";  // 원형차트 페이지로 이동하겠음.
+		}
+		else
+			return "search/result";
+	}
+	
 	// 그래프로 가는 페이지 컨트롤러
 	@RequestMapping(value="chart/graph", method=RequestMethod.GET, params = {"keyword"})
 	String goGraph(HttpServletRequest request, Model model, @RequestParam("keyword") String keyword) throws UnsupportedEncodingException

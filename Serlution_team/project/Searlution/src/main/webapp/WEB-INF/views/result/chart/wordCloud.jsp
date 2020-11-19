@@ -112,65 +112,65 @@ am4core.ready(function() {
 	series.rotationThreshold = 0.5;
 	
 	series.data = [ {
-	    "tag": "아델 hello 가사",
-	    "count": "1765836"
+	    "tag": "${wordCounts[0].word_name",
+	    "count": "${wordCounts[0].word_count}"
 	}, {
-	    "tag": "허각 hello",
-	    "count": "1517355"
+	    "tag": "${wordCounts[1].word_name",
+	    "count": "${wordCounts[1].word_count}"
 	}, {
-	    "tag": "hello 아델",
-	    "count": "1287629"
+	    "tag": "${wordCounts[2].word_name",
+	    "count": "${wordCounts[2].word_count}"
 	}, {
-	    "tag": "웨스트라이프",
-	    "count": "1263946"
+	    "tag": "${wordCounts[3].word_name",
+	    "count": "${wordCounts[3].word_count}"
 	}, {
-	    "tag": "hi",
-	    "count": "1174721"
+	    "tag": "${wordCounts[4].word_name",
+	    "count": "${wordCounts[4].word_count}"
 	}, {
-	    "tag": "hello 아델",
-	    "count": "1116769"
+	    "tag": "${wordCounts[5].word_name",
+	    "count": "${wordCounts[5].word_count}"
 	}, {
-	    "tag": "hello 가사",
-	    "count": "944983"
+	    "tag": "${wordCounts[6].word_name",
+	    "count": "${wordCounts[6].word_count}"
 	}, {
-	    "tag": "hello 로시",
-	    "count": "805679"
+	    "tag": "${wordCounts[7].word_name",
+	    "count": "${wordCounts[7].word_count}"
 	}, {
-	    "tag": "hello!",
-	    "count": "606051"
+	    "tag": "${wordCounts[8].word_name",
+	    "count": "${wordCounts[8].word_count}"
 	}, {
-	    "tag": "hello world",
-	    "count": "591410"
+	    "tag": "${wordCounts[9].word_name",
+	    "count": "${wordCounts[9].word_count}"
 	}, {
-	    "tag": "mr. yesterday",
-	    "count": "450454"
+	    "tag": "${wordCounts[10].word_name",
+	    "count": "${wordCounts[10].word_count}"
 	}, {
-	    "tag": "안녕하세요",
-	    "count": "5453045"
+	    "tag": "${wordCounts[11].word_name",
+	    "count": "${wordCounts[11].word_count}"
 	}, {
-	    "tag": "하이",
-	    "count": "7861045"
+	    "tag": "${wordCounts[12].word_name",
+	    "count": "${wordCounts[12].word_count}"
 	}, {
-	    "tag": "곤니찌와",
-	    "count": "434870"
+	    "tag": "${wordCounts[13].word_name",
+	    "count": "${wordCounts[13].word_count}"
 	}, {
-	    "tag": "other side",
-	    "count": "7345874"
+	    "tag": "${wordCounts[14].word_name",
+	    "count": "${wordCounts[14].word_count}"
 	}, {
-	    "tag": "hihi",
-	    "count": "1256644"
+	    "tag": "${wordCounts[15].word_name",
+	    "count": "${wordCounts[15].word_count}"
 	}, {
-	    "tag": "helloo",
-	    "count": "7678223"
+	    "tag": "${wordCounts[16].word_name",
+	    "count": "${wordCounts[16].word_count}"
 	}, {
-	    "tag": "why",
-	    "count": "4732368"
+	    "tag": "${wordCounts[17].word_name",
+	    "count": "${wordCounts[17].word_count}"
 	}, {
-	    "tag": "helloooo",
-	    "count": "1234847"
+	    "tag": "${wordCounts[18].word_name",
+	    "count": "${wordCounts[18].word_count}"
 	}, {
-	    "tag": "슬프다",
-	    "count": "5456877"
+	    "tag": "${wordCounts[19].word_name",
+	    "count": "${wordCounts[19].word_count}"
 	}];
 	
 	series.dataFields.word = "tag";

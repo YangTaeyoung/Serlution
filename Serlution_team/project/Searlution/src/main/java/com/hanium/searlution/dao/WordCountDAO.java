@@ -51,7 +51,7 @@ private JdbcTemplate jdbcTemplate;
 	}
 	public List<WordCount> selectByRank(String keyword)
 	{
-		String sql = "select word_name, word_count from count_info where keyword = '" + keyword+"' order by word_count desc limit 10"; // 상위 카운트 10개 레코드 가져오기
+		String sql = "select word_name, word_count from count_info where keyword = '" + keyword+"' order by word_count desc limit 20"; // 상위 카운트 20개 레코드 가져오기
 		List<WordCount> wordCounts = jdbcTemplate.query(sql, new WordCountMapper());
 		return wordCounts;
 	}
