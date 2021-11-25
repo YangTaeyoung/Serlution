@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+C:\Users\imgzo\eclipse-workspace\ccupdaegi\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1874401458.index
-3887246530.index
-3586608058.index
-287727835.index
-105038055.index
-334117263.index

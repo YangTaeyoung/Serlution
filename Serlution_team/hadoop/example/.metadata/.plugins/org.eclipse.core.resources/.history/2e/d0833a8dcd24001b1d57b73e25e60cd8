@@ -1,5 +1,0 @@
-package hadoopWordcount;
-
-public class WordCountReducer {
-
-}
